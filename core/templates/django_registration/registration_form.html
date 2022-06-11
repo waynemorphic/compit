@@ -1,0 +1,25 @@
+{% extends 'home/base.html' %}
+{% load bootstrap5 %}
+{% load static %}
+
+{% block content %}
+{{ block.super }}
+
+<div class="container">
+    <!-- <a class="navbar-brand" href="{% url 'index' %}"
+            style="font-family: 'Pattaya', sans-serif; letter-spacing: 1px; font-size: 1.5rem; padding: 1rem; color:black"><span><i
+                    class="fa-brands fa-instagram fa-xl"></i></span> Instagram</a> -->
+    <div class="col-md-4">
+        <form action="registration" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <div class="form-group">
+                <input type="submit" class="btn btn-outline-secondary" value="Sign Up">
+
+            </div>
+            <input type="hidden" name="next" value="{{next}}">
+            <small>Already have an account? Sign In <a href="{% url 'login' %}">Here</a></small>
+        </form>
+    </div>
+</div>
+{% endblock %}
