@@ -26,5 +26,5 @@ urlpatterns = [
     path('accounts/', include('django_registration.backends.one_step.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/login', auth_views.LoginView.as_view(next_page = 'home/'), name = 'login'),
-    path('accounts/logout', views.logout, name = 'logout'),
+    path('accounts/logout', views.sign_out, name = 'logout'),
 ]
