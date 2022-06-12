@@ -2,14 +2,12 @@
 {% load bootstrap5 %}
 {% block content %}
 <div class="container">
-    <!-- <a class="navbar-brand" href="{% url 'index' %}"
-            style="font-family: 'Pattaya', sans-serif; letter-spacing: 1px; font-size: 1.5rem; padding: 1rem; color:black"><span><i
-                    class="fa-brands fa-instagram fa-xl"></i></span> Instagram</a> -->
+    
     <div class="col-md-4">
         {% if form.errors %} 
         <p>Email or password is incorrect</p>
         {% endif %} 
-        <form action="login" method="post">
+        <form action="" method="post">
             {% csrf_token %}
             {% bootstrap_form form %}
             <div class="form-group">
