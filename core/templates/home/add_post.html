@@ -1,0 +1,14 @@
+{% extends 'home/base.html' %}
+{% load bootstrap5 %}
+{% load static %}
+
+{% block content %}
+{{ block.super }}
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %} 
+    <div class="form-group">
+        <input type = "submit" class="btn btn-primary" value="Post">
+    </div>
+</form>
+{% endblock %}
