@@ -4,5 +4,16 @@
 
 {% block content %}
 {{ block.super }}
-
+<div class="container-fluid">
+    <h3>hello</h3>
+    {% for post in projects %}
+    <div class="row">
+        <div class="col">
+            <img src="{{ post.image.url}}" alt="{{post.title}}" style="width: 200px; height: 200px;">
+            <small>{{post.description}}</small>
+            <h3>{{post.editor}}</h3>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
