@@ -1,12 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-# Create your models here.
 
-# user model
-# class User(models.Model):
-#     email = models.EmailField()
-#     image = models.ImageField(upload_to = 'media/', null = True)
-    
+# Create your models here.    
 # projects model
 class Projects(models.Model):
     '''
@@ -21,6 +16,17 @@ class Projects(models.Model):
     link = models.CharField(max_length= 250, null = False)
     upload = models.FileField(upload_to='media/')
     
+    def __str__(self):
+        return self.title
+    
+    def save_projects(self):
+        self.save()
+    
+    @classmethod
+    def search_projects(cls, search_term):
+        find_project = cls.objects.filter(title__icontains = search_term)
+        return find_project
+    
 class Profile(models.Model):
     '''
     Args:
@@ -28,11 +34,19 @@ class Profile(models.Model):
     '''
     
     username = models.CharField(max_length = 250 )
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null= True, default = '')
     bio = models.TextField()
-    profile_picture = models.ImageField(upload_to = 'media/')
+    profile_picture = models.ImageField(default = 'default.jpg', upload_to = 'media/')
     projects = models.ForeignKey(Projects, on_delete= models.CASCADE, null = True)
-    contact = models.CharField
+    contact = models.CharField(max_length=250, null = True)
     
+    def __str__(self):
+        return self.username
+    
+    def save_profile(self):
+        self.save()
+        
+   
 class Review(models.Model):
     '''
     Classes:
