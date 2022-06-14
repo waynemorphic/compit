@@ -1,0 +1,24 @@
+{% extends 'home/base.html' %} 
+{% load bootstrap5 %} 
+{% load static %}
+
+{% block content %}
+{{ block.super }}
+<div class="container">
+    
+    <div class="row">
+        {% if search_projects %}
+        <h2>Found {{search_projects | length}} projects of search term {{message}}</h2>
+        {% else %}
+        <h2>Found 0 projects of search term {{mesage}}</h2>
+        {% endif %}
+    </div>
+    <div class="row">
+        {% if search_projects %}
+        {% for search in search_projects %}
+        <img src="{{search.image.url}}" alt="{{message}}">
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
