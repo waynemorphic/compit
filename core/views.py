@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from core import serializer
-from core.models import Profile, Projects
+from core.models import Profile, Projects, Review
 from core.serializer import ProfileSerializer,  ProjectsSerializer
 from rest_framework import status
 from core.permissions import IsAdminOrReadOnly
@@ -26,7 +26,10 @@ def home(request):
     projects = Projects.objects.all()
     print(projects)
     users = User.objects.all()
-    context = {"projects": projects, "users": users}
+    print(users)
+    profiles = Profile.objects.all()
+    print(profiles)
+    context = {"projects": projects, "users": users, "profiles": profiles}
     return render(request, 'home/index.html', context)
 
 # post a project
@@ -84,6 +87,18 @@ def profile(request):
     print(profiles)
     context = {"user_form": user_form, "profile_form": profile_form, "profiles": profiles, "all_projects": all_projects}
     return render(request, 'users/profile.html', context)
+
+# search projects by name
+def search_results(request):
+    if 'project' in request.GET and request.GET['project']:
+        search_term = request.GET.get("project")
+        search_projects = Projects.search_projects(search_term)
+        message = f'{search_term}'
+        print(message)
+        return render(request, 'home/search.html', {"message": message, "search_projects": search_projects})
+    else:
+        message='You have not searched for any project'
+    return render(request, 'home/search.html', {"message": message})
 
 # Api endpoints
 class ProfileList(APIView):
