@@ -15,6 +15,8 @@ urlpatterns = [
     path('api/profiles/', views.ProfileList.as_view()),
     path('api/projects/', views.ProjectsList.as_view()),
     path('home/profile/', views.profile, name = 'user profile'),
+    path('home/search', views.search_results, name='search results'),
+    path('logout/', views.sign_out, name ='logout')
 ]
 
 if settings.DEBUG:
