@@ -4,25 +4,61 @@
 
 {% block content %}
 {{block.super}}
-<div class="container">
+
+<body style="background-color: #9DA3A4;">
+<div class="container-fluid" >
+
     <div class="row my-3 p-3">
         {% for prof in profiles %}
         {% if prof.profile_picture %}
         <img class="rounded-circle account-img" src="{{prof.profile_picture.url}}"
-            style="cursor:pointer; width: 75px; height: 75px;" class="thumbnail">
-        <h3>{{user.username}}</h3>
+            style="cursor:pointer; width: 100px; height: 75px;" class="thumbnail">
+        <h3>{{user.username | capfirst}}</h3>
         {% endif %}
+
+        <p>Bio: {{prof.bio}}</p>
+        <small>Contact: {{prof.contact}}</small>
+        {% endfor %}
     </div>
-    {% if prof.projects %}
-    <div class="col">
-        <img src="{{prof.projects.image.url}}">
-        <h4>{{prof.projects.title}}</h4>
-        {% else %}
-        <p>{{user.username}} has not posted any projects yet</p>
-        {% endif %}
+
+
+    <div class="col p-2">
+        <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+            aria-controls="offcanvasExample">
+            Update Profile
+        </a>
+    </div>
+
+    <div class="row row-cols-sm-1-md-2 gap-1">
+        {% for proj in all_projects %}
+
+        <div class="col sm-1-md-2 mb-3">
+            <div class="card" style="width: 18rem; height:auto" >
+                {% if proj.image %}
+                <img src="{{proj.image.url}}" class="card-img-top" alt="{{proj.title}}"  style="width:18rem; height: 12rem;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{proj.title}}</h5>
+                    <p class="card-text">{{proj.description}}</p>
+                    <p class="card-text">
+                        {% for prof in profiles %}
+                        {% if prof.profile_picture %}
+                        <img class="rounded-circle account-img" src="{{prof.profile_picture.url}}"
+                            style="cursor:pointer; width: 30px; height: 30px;" class="thumbnail">
+                        {% endif %}
+                        {% endfor %}
+                        <small class="text-muted">{{proj.editor | capfirst}} <br>{{proj.contact}}</small>
+                        <a href="{{proj.link}}"></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
-{% endfor %}
+
+
+
 {% if user_form.errors %}
 <div class="alert alert-danger alert-dismissible" role="alert">
     <div id="form_errors">
@@ -35,23 +71,37 @@
     </button>
 </div>
 {% endif %}
-<div class="form-content">
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="form-row p-4">
-            <div class="col-md-5 ">
-                <div class="form-group">
-                    {% bootstrap_form user_form %}
-                </div>
-                <div class="form-group">
-                    {% bootstrap_form profile_form %}
-                </div>
-            </div>
-        
-        <button type="submit" class="btn btn-primary btn-sm">Save Changes</button>
-        <button type="reset" class="btn btn-primary btn-sm">Reset</button>
+
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Update Your Profile</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-</form>
+    <div class="offcanvas-body">
+        <div class="form-content">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-row p-2">
+                    <div class="col-md-12 ">
+                        <div class="form-group">
+                            {% bootstrap_form user_form %}
+                        </div>
+                        <div class="form-group">
+                            {% bootstrap_form profile_form %}
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-sm">Save Changes</button>
+                    <button type="reset" class="btn btn-primary btn-sm">Reset</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
 </div>
+
+
+</body>
 
 {% endblock %}

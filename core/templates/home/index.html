@@ -4,16 +4,35 @@
 
 {% block content %}
 {{ block.super }}
+
 <div class="container-fluid">
-    <h3>hello</h3>
-    {% for post in projects %}
-    <div class="row">
-        <div class="col">
-            <img src="{{ post.image.url}}" alt="{{post.title}}" style="width: 200px; height: 200px;">
-            <small>{{post.description}}</small>
-            <h3>{{post.editor}}</h3>
+    <div class="row row-cols-sm-1-md-2;" style="background-color: #9DA3A4;">
+        {% for post in projects %}
+        <div class="col mb-2 p-3">
+            <div class="card" style="width: 20rem; height: 40rem; background-color: #FFDBDA;">
+                <img src="{{ post.image.url}}" class="card-img-top" alt="{{post.title}}" style="width:20rem; height: 12rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{post.title}}</h5>
+                    <p class="card-text">{{post.description}}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for prof in profiles %}
+                    <li class="list-group-item"><img class="rounded-circle account-img"
+                            src="{{prof.profile_picture.url}}" style="cursor:pointer; width: 30px; height: 30px;"
+                            class="thumbnail"> By {{post.editor | capfirst}}</li>                    
+                    <li class="list-group-item">Contact: {{prof.contact}}</li>
+                    {% endfor %}
+                    <li class="list-group-item">A third item</li>
+                </ul>
+                <div class="card-body">
+                    <a href="#" class="card-link">{{post.link}}</a>
+                </div>
+            </div>
+
+            
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
+
 </div>
 {% endblock %}
