@@ -6,30 +6,58 @@
 {{ block.super }}
 
 <div class="container-fluid">
-    <div class="row row-cols-sm-1-md-2;" style="background-color: #9DA3A4;">
+    <div>
+        <img src="{% static 'gallery/screenshot.png' %}" style="width: 100vw; height: 100vh; margin: 5px;">
+        <a class="btn btn-outline-success" href="https://waynemorphic.github.io/pizzeria/" style="margin: 5px;">View
+            Site</a>
+    </div>
+    <h3 class="text-center">Featured Projects</h3>
+    <div class="d-flex flex-row mb-3;">
+        
         {% for post in projects %}
-        <div class="col mb-2 p-3">
-            <div class="card" style="width: 20rem; height: 40rem; background-color: #FFDBDA;">
-                <img src="{{ post.image.url}}" class="card-img-top" alt="{{post.title}}" style="width:20rem; height: 12rem;">
+        <div class="mb-2 p-3">
+            <div class="card" style="width: 20rem; height: auto; background-color: #FFDBDA;">
+                <img src="{{ post.image.url}}" class="card-img-top" alt="{{post.title}}"
+                    style="width:20rem; height: 12rem;">
                 <div class="card-body">
                     <h5 class="card-title">{{post.title}}</h5>
                     <p class="card-text">{{post.description}}</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    {% for prof in profiles %}
-                    <li class="list-group-item"><img class="rounded-circle account-img"
+                    <div class="d-flex justify-content-start">
+                    
+                        
+                        <div class="p-2">
+                            {% for prof in profiles %}
+                            <img class="rounded-circle account-img"
                             src="{{prof.profile_picture.url}}" style="cursor:pointer; width: 30px; height: 30px;"
-                            class="thumbnail"> By {{post.editor | capfirst}}</li>                    
-                    <li class="list-group-item">Contact: {{prof.contact}}</li>
-                    {% endfor %}
-                    <li class="list-group-item">A third item</li>
-                </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">{{post.link}}</a>
+                            class="thumbnail"> By {{post.editor | capfirst}}
+                        </div>
+                        <div class="p-2">
+                            <i class="fa-solid fa-address-card fa-2xl"></i> {{prof.contact}}
+                        </div>
+                     </div>    
+                    <div class="d-flex flex-column mb-3">
+                        <div class="p-2">
+                            <a class="btn btn-outline-success btn-sm" href="{{post.link}}" style="margin: 5px;">View Site</a>
+                        </div>
+                        <div>
+                            <form>
+                                {% csrf_token %} 
+                                {% bootstrap_form design_form %}
+                            </form>
+                        </div>
+                    </div>                     
+                            {% endfor %}
+                        
+                        
+                    
+                    
+                    
+
                 </div>
+                
             </div>
 
-            
+
         </div>
         {% endfor %}
     </div>
