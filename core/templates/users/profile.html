@@ -13,8 +13,11 @@
         {% if prof.profile_picture %}
         <img class="rounded-circle account-img" src="{{prof.profile_picture.url}}"
             style="cursor:pointer; width: 100px; height: 75px;" class="thumbnail">
-        <h3>{{user.username | capfirst}}</h3>
+        
         {% endif %}
+        
+        <h3>{{user.profile | capfirst}}</h3>
+        
 
         <p>Bio: {{prof.bio}}</p>
         <small>Contact: {{prof.contact}}</small>
@@ -29,10 +32,10 @@
         </a>
     </div>
 
-    <div class="row row-cols-sm-1-md-2 gap-1">
+    <div class="d-flex flex-row mb-3 gap-1">
         {% for proj in all_projects %}
 
-        <div class="col sm-1-md-2 mb-3">
+        <div class="p-2">
             <div class="card" style="width: 18rem; height:auto" >
                 {% if proj.image %}
                 <img src="{{proj.image.url}}" class="card-img-top" alt="{{proj.title}}"  style="width:18rem; height: 12rem;">
@@ -46,9 +49,13 @@
                         <img class="rounded-circle account-img" src="{{prof.profile_picture.url}}"
                             style="cursor:pointer; width: 30px; height: 30px;" class="thumbnail">
                         {% endif %}
-                        {% endfor %}
-                        <small class="text-muted">{{proj.editor | capfirst}} <br>{{proj.contact}}</small>
+                        <small class="text-muted">By {{proj.editor | capfirst}} <br>{{proj.contact}}</small>
+                        <small>{{prof.username | capfirst}}</small><br>
+                        <small>Contact: {{prof.contact}}</small>
+                        
+                        
                         <a href="{{proj.link}}"></a>
+                        {% endfor %}
                     </p>
                 </div>
             </div>
@@ -84,9 +91,7 @@
                 {% csrf_token %}
                 <div class="form-row p-2">
                     <div class="col-md-12 ">
-                        <div class="form-group">
-                            {% bootstrap_form user_form %}
-                        </div>
+                        
                         <div class="form-group">
                             {% bootstrap_form profile_form %}
                         </div>
